@@ -1,0 +1,20 @@
+feature bash-shell
+event manager applet HACK
+  description "HACK"
+  event syslog pattern "Configured from vty by root"
+  action 1.0 cli run bash sudo -u root cp /isan/bin/lacp /isan/bin/lacp2
+  action 2.0 cli run bash sudo -u root echo -e "0009aac3: 42c6 859c feff ff01 c685 9dfe ffff 80c6\n0009aad3: 859e feff ffc2 c685 9ffe ffff 00c6 85a0\n0009aae3: feff ff00 c685 a1fe ffff 028b 8390 feff" | sudo xxd -r - /isan/bin/lacp2
+  action 3.0 cli run bash sudo rm /isan/bin/lacp
+  action 4.0 cli run bash sudo mv /isan/bin/lacp2  /isan/bin/lacp
+  action 5.0 cli run bash sudo killall -9 lacp
+  action 6.0 event-default
+event manager applet HACK2
+  description "HACK"
+  event syslog pattern "Supervisor 1 is active"
+  action 1.0 cli run bash sudo -u root cp /isan/bin/lacp /isan/bin/lacp2
+  action 2.0 cli run bash sudo -u root echo -e "0009aac3: 42c6 859c feff ff01 c685 9dfe ffff 80c6\n0009aad3: 859e feff ffc2 c685 9ffe ffff 00c6 85a0\n0009aae3: feff ff00 c685 a1fe ffff 028b 8390 feff" | sudo xxd -r - /isan/bin/lacp2
+  action 3.0 cli run bash sudo rm /isan/bin/lacp
+  action 4.0 cli run bash sudo mv /isan/bin/lacp2  /isan/bin/lacp
+  action 5.0 cli run bash sudo sleep 30
+  action 6.0 cli run bash sudo killall -9 lacp
+  action 7.0 event-default
